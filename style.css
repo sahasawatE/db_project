@@ -1,0 +1,32 @@
+table {
+  border-collapse: collapse;
+}
+
+body{
+  transition: 0.5s;
+}
+
+table, th, td {
+  border: 1px solid black;
+  text-align: center;
+}
+
+.showHistory {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: none;
+  align-items: center;
+  justify-items: center;
+}
+
+#history_table{
+  transform: translate(12.5vw,25px);
+  background-color: white;
+}
+
+.showHistory button{
+  transform: translate(90vw);
+}
