@@ -11,15 +11,43 @@
 	session_start();
 	include("connection.php");
 	$username = $_SESSION['username'];
-	$target_dir = "upload/";
-	$picture = $target_dir . basename($_FILES['picture']["name"]);
 	$uploadOK = 1;
-	$imageFileType = strtolower(pathinfo($picture,PATHINFO_EXTENSION));
 	
-	if(isset($_POST['submit'])){
-		$check = getimagesize($_FILES['picture']["tmp_name"]);
+	$target_dir = "upload/";
+	$image = $_FILES['picture']['name'];
+	$pic_name = basename($image);
+	$target_path = $target_dir.$pic_name;
+	$file_type = pathinfo($target_path,PATHINFO_EXTENSION);
+	
+	if(isset($_POST['add']) && !empty($_FILES['picture']['name'])){
+		$allow_type = array('JPG','PNG','JPEG','gif','jpg');
+		if(in_array($file_type,$allow_type)){
+			if(move_uploaded_file($_FILES['picture']['tmp_name'],$target_path)){
+				$uploadOK = 1;
+			}
+			else {
+				$uploadOK = 0;
+				echo "fuck1";
+			}
+		}
+		else{
+			$uploadOK = 0;
+			echo "fuck2";
+		}
+	}
+	else{
+		$uploadOK = 0;
+		echo "fuck3";
+	}
+	/*$target_dir = "DB_Project-master/upload/";
+	$pic_name = basename($_FILES['picture']['name']);
+	$picture = $target_dir.$pic_name;
+	$imageFileType = pathinfo($picture,PATHINFO_EXTENSION);
+	
+	if(isset($_POST['submit']) && !empty($_FILES['picture']["name"])){
+		$check = getimagesize($_FILES['picture']["name"]);
 		if($check != false){
-			echo "File is an image - " . $check["mine"] . ".";
+			echo "File is an image - ".$check["mine"].".";
 			$uploadOK = 1;
 		}
 		else{
@@ -31,10 +59,9 @@
 		echo "File is already exists.";
 		$uploadOK = 0;
 	}
-	
+	*/
 	if($uploadOK == 1){
-		$user = $_SESSION['username'];
-		$strUser = "SELECT * FROM `login` WHERE `username` = '".$user."'";
+		$strUser = "SELECT * FROM `login` WHERE `username` = '".$username."'";
 		$objQuery1 = $connect->query($strUser);
 		$objResult1 = $objQuery1->fetch_array();
 		
@@ -43,7 +70,7 @@
 		}
 		else{
 			$userID = $objResult1['userID'];
-			$strUpdate = "INSERT INTO `itemtosell`(`userID`, `productID`, `name`, `stock`, `price`, `sold`, `picture`, `delivery`) VALUES ('".$userID."',0,'".$_POST['name']."','".$_POST['stock']."','".$_POST['price']."',0,'".$_POST['picture']."','".$_POST['service']."')";
+			$strUpdate = "INSERT INTO `itemtosell`(`userID`, `productID`, `name`, `stock`, `price`, `sold`, `picture`, `delivery`) VALUES ('".$userID."',0,'".$_POST['name']."','".$_POST['stock']."','".$_POST['price']."',0,'".$image."','".$_POST['service']."')";
 			$objQuery2 = $connect->query($strUpdate);
 			if(!$objQuery2){ ?>
 				<script language="javascript">
@@ -54,15 +81,17 @@
 				echo $strUpdate;
 			}
 			else{ ?>
-				<script language="javascript">
+				<!--script language="javascript">
 					alert("Insert completed!!");
-				</script><?
+				</script--><?
+				//echo $image;
 				header('location:seller.php');
 			}
 		}
 	}
 	else{
 		echo "can't insert your data.";
+		echo $uploadOK;
 	}
 	?>
 </body>

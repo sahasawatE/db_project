@@ -15,6 +15,12 @@
 	<? 
 	session_start();
 	include("connection.php");
+	
+	$user = $_SESSION['username'];
+	$getUserID = "SELECT userID FROM login WHERE username = '".$user."'";
+	$objQuery = $connect->query($getUserID);
+	$objResult = $objQuery->fetch_array();
+	
 	$strDelivery = "SELECT `service_name` FROM `delivery`";
 	$objQuery1 = $connect->query($strDelivery);
 	$objResult1 = $objQuery1->fetch_array();
@@ -26,7 +32,7 @@
     <a href="customer.php">Back</a>
   </div>
   <div id="addingForm" style="display: none; transition: 1s">
-    <form id="formAdding" action="updatestock.php" method="post">
+    <form id="formAdding" action="updatestock.php" method="post" enctype="multipart/form-data">
       <div>
 		  <a>Name : </a><input type="text" id="add_name" name="name" required/>
       </div>
@@ -67,6 +73,23 @@
         <th>product picture</th>
         <th>remove</th>
       </tr>
+		
+			<?
+			$userID = $objResult['userID'];
+			$strList = "SELECT * FROM `itemtosell` WHERE `userID` = '".$userID."'";
+			$objQuery2 = $connect->query($strList);
+			$objResult2 = $objQuery2->fetch_array();
+			
+			foreach($objQuery2 as $row){ ?>
+			<tr>
+				<td><? echo $row['name'];?></td>
+				<td><? echo $row['stock'];?></td>
+				<td><? echo $row['price'];?></td>
+				<td><? echo $row['sold'];?></td>
+				<td><img src="upload/<? echo $row['picture'];?>" hight="60" width="60"/></td>
+				<td></td>
+			</tr>
+			<?	}?>
     </table>
   </div>
   <div class="showHistory" id="saleHistory">
