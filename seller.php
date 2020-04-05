@@ -16,8 +16,8 @@
 	session_start();
 	include("connection.php");
 	$strDelivery = "SELECT `service_name` FROM `delivery`";
-	$objQuery = $connect->query($strDelivery);
-	$objResult = $objQuery->fetch_array();
+	$objQuery1 = $connect->query($strDelivery);
+	$objResult1 = $objQuery1->fetch_array();
 	?>
   <h1> Seller </h1>
   <div>
@@ -28,24 +28,24 @@
   <div id="addingForm" style="display: none; transition: 1s">
     <form id="formAdding" action="updatestock.php" method="post">
       <div>
-        Name : <input type="text" id="add_name" value="" name="Name" required/>
+		  <a>Name : </a><input type="text" id="add_name" name="name" required/>
       </div>
       <div>
-        stock : <input type="number" id="add_stock" value="0" name="stock" required/>
+        <a>stock : </a><input type="number" id="add_stock" value="0" name="stock" required/>
       </div>
       <div>
-        price : <input type="number" id="add_price" value="0" name="price" required/>
+        <a>price : </a><input type="number" id="add_price" value="0" name="price" required/>
       </div>
 		<div>
-			picture : <input type="file" id="add_picture" name="picture" required/>
+			<a>picture : </a><input type="file" id="add_picture" name="picture" required/>
 		</div>
 		<div class="dropdown">
 			<div id="my_service" class="drop_service">
 				<select name="service">
 					<option selected hidden value="">Please select your delivery service.</option>
 					<?
-					foreach($objQuery as $row){
-						echo "<option value=".$row['service_name'].">".$row['service_name']."</option>";
+					foreach($objQuery1 as $row){
+						echo "<option name=".$row['service_name']." value=".$row['service_name'].">".$row['service_name']."</option>";
 						echo "\n";
 					}
 					?>
@@ -90,12 +90,12 @@
   <script type="text/javascript" src="dummy.js"></script>
   <script type="text/javascript" src="storeConfig.js"></script>
   <script>
-    var id = 0
+    /*var id = 0
     const prod = JSON.parse(getAllProduct())
     prod.forEach(doc => {
       console.log(doc)
       addingStore(doc)
-    })
+    })*/
     function showAddingForm() {
       var form = document.getElementById("addingForm")
       form.style.display = "block"
@@ -116,7 +116,7 @@
       document.getElementById("saleHistory").style.display = "none"
       document.querySelector("body").style.backgroundColor = "#ffffff"
     }
-
+/*
     function addingStore(doc) {
       const innerHEML = `
       <tr id = "prod${id++}">
@@ -135,7 +135,7 @@
     function addingSaler(doc) {
 
     }
-
+	
     function addClick() {
       const doc = {
         name: document.getElementById("add_name").value,
@@ -146,7 +146,7 @@
       addProduct(doc)
       console.log(doc)
     }
-
+*/
     function resetValue() {
       document.getElementById("add_name").value = ""
       document.getElementById("add_stock").value = 0

@@ -33,7 +33,8 @@
 	}
 	
 	if($uploadOK == 1){
-		$strUser = "SELECT * FROM `login` WHERE `username` = '".$_SESSION['username']."'";
+		$user = $_SESSION['username'];
+		$strUser = "SELECT * FROM `login` WHERE `username` = '".$user."'";
 		$objQuery1 = $connect->query($strUser);
 		$objResult1 = $objQuery1->fetch_array();
 		
@@ -41,11 +42,24 @@
 			echo "fail to connect to database..";
 		}
 		else{
-			//$strUpdate = "INSERT INTO `itemtosell`(`userID`, `productID`, `name`, `stock`, `price`, `sold`, `picture`, `delivery`) VALUES (".$objResult1['userID'].",0,".$_POST['Name'].",".$_POST['stock'].",".$_POST['price'].",0,".$_POST['picture'].",".$_POST['delivery'].")";
+			$userID = $objResult1['userID'];
+			$strUpdate = "INSERT INTO `itemtosell`(`userID`, `productID`, `name`, `stock`, `price`, `sold`, `picture`, `delivery`) VALUES ('".$userID."',0,'".$_POST['name']."','".$_POST['stock']."','".$_POST['price']."',0,'".$_POST['picture']."','".$_POST['service']."')";
+			$objQuery2 = $connect->query($strUpdate);
+			if(!$objQuery2){ ?>
+				<script language="javascript">
+					alert("cannot insert your data...");
+				</script>
+			<?
+				//header('location:seller.php');
+				echo $strUpdate;
+			}
+			else{ ?>
+				<script language="javascript">
+					alert("Insert completed!!");
+				</script><?
+				header('location:seller.php');
+			}
 		}
-	
-	
-		
 	}
 	else{
 		echo "can't insert your data.";
