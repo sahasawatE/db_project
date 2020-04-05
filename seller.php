@@ -15,15 +15,11 @@
 	<? 
 	session_start();
 	include("connection.php");
-	
 	$user = $_SESSION['username'];
-	$getUserID = "SELECT userID FROM login WHERE username = '".$user."'";
-	$objQuery = $connect->query($getUserID);
-	$objResult = $objQuery->fetch_array();
 	
 	$strDelivery = "SELECT `service_name` FROM `delivery`";
 	$objQuery1 = $connect->query($strDelivery);
-	$objResult1 = $objQuery1->fetch_array();
+	//$objResult1 = $objQuery1->fetch_array();
 	?>
   <h1> Seller </h1>
   <div>
@@ -75,10 +71,10 @@
       </tr>
 		
 			<?
-			$userID = $objResult['userID'];
+			$userID = $connect->query("SELECT userID FROM login WHERE username = '".$user."'")->fetch_array()['userID'];
 			$strList = "SELECT * FROM `itemtosell` WHERE `userID` = '".$userID."'";
 			$objQuery2 = $connect->query($strList);
-			$objResult2 = $objQuery2->fetch_array();
+			//$objResult2 = $objQuery2->fetch_array();
 			
 			foreach($objQuery2 as $row){ ?>
 			<tr>
