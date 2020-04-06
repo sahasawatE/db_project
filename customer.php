@@ -30,6 +30,18 @@
         <th> Product Pic</th>
         <th> Delivery</th>
       </tr>
+		<?
+		$getItem = $connect->query("SELECT * FROM itemtosell");
+		foreach($getItem as $row){ ?>
+		<tr>
+			<td><? echo $row['name'];?></td>
+			<td><? echo $row['stock'];?></td>
+			<td><? echo $row['sold'];?></td>
+			<td><? echo $row['price'];?></td>
+			<td><img src="upload/<? echo $row['picture'];?>" height="60" width="60"/></td>
+			<td><? echo $row['delivery'];?></td>
+		</tr>
+		<? }?>
     </table>
   </div>
   <div name="footer">

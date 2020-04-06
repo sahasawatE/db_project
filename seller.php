@@ -74,7 +74,8 @@
 			$userID = $connect->query("SELECT userID FROM login WHERE username = '".$user."'")->fetch_array()['userID'];
 			$strList = "SELECT * FROM `itemtosell` WHERE `userID` = '".$userID."'";
 			$objQuery2 = $connect->query($strList);
-			//$objResult2 = $objQuery2->fetch_array();
+			/*$objResult2 = $objQuery2->fetch_array();
+			$name = $objQuery2['name'];*/
 			
 			foreach($objQuery2 as $row){ ?>
 			<tr>
@@ -83,7 +84,7 @@
 				<td><? echo $row['price'];?></td>
 				<td><? echo $row['sold'];?></td>
 				<td><img src="upload/<? echo $row['picture'];?>" hight="60" width="60"/></td>
-				<td></td>
+				<td><form action="remove.php" method="post" id="remove"><button name="remove" type="submit" value="<? echo $row['name']?>" form="remove">Remove</button></form></td>
 			</tr>
 			<?	}?>
     </table>
