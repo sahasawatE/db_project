@@ -28,7 +28,7 @@
     <a href="customer.php">Back</a>
   </div>
   <div id="addingForm" style="display: none; transition: 1s">
-    <form id="formAdding" action="updatestock.php" method="post" enctype="multipart/form-data">
+    <form id="formAdding" action="updatestock.php" method="post" enctype="multipart/form-data" autocomplete="off">
       <div>
 		  <a>Name : </a><input type="text" id="add_name" name="name" required/>
       </div>
@@ -172,7 +172,15 @@
       document.getElementById("add_stock").value = 0
       document.getElementById("add_price").value = 0
     }
-
+	  function resetStore(){
+		  var check = confirm("Are you sure to reset your store?");
+		  if(check == true){
+			  alert("reset completed !");
+		  }
+		  if(check == false){
+			  alert("Coward");
+		  }
+	  }
 
   </script>
 </body>

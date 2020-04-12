@@ -19,7 +19,9 @@ if(!$objResult){
 else{
 	
 	if($status == "Admin"){
-		header("location:admin.html");
+		$_SESSION['login'] = true;
+		$_SESSION['username'] = $username;
+		header("location:admin.php");
 	}
 	else{
 		$_SESSION['login'] = true;
