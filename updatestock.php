@@ -69,9 +69,24 @@
 			echo "fail to connect to database..";
 		}
 		else{
+			
 			$userID = $objResult1['userID'];
-			$strUpdate = "INSERT INTO `itemtosell`(`userID`, `productID`, `name`, `stock`, `price`, `sold`, `picture`, `delivery`) VALUES ('".$userID."',0,'".$_POST['name']."','".$_POST['stock']."','".$_POST['price']."',0,'".$image."','".$_POST['service']."')";
+			$checkStock = $connect->query("SELECT * FROM itemtosell WHERE userID = '".$userID."' AND name = '".$_POST['name']."' AND price = '".$_POST['price']."' AND delivery = '".$_POST['service']."' AND picture = '".$image."'");
+			$objResult2 = $checkStock->fetch_array();
+			$objStock = $objResult2['stock'];
+			$totalStock = $objStock+$_POST['stock'];
+			
+			if($objResult2){
+				//UPDATE
+				$strUpdate = "UPDATE `itemtosell` SET `userID`= '".$userID."',`productID`= '0',`name`='".$_POST['name']."',`stock`= '".$totalStock."',`price`= '".$_POST['price']."',`sold`= '0',`picture`= '".$image."',`delivery`= '".$_POST['service']."' WHERE userID = '".$userID."' AND name = '".$_POST['name']."' AND delivery = '".$_POST['service']."' AND picture = '".$image."' AND price = '".$_POST['price']."'";
+			}
+			else{
+				//INSERT
+				$strUpdate = "INSERT INTO `itemtosell`(`userID`, `productID`, `name`, `stock`, `price`, `sold`, `picture`, `delivery`) VALUES ('".$userID."',0,'".$_POST['name']."','".$_POST['stock']."','".$_POST['price']."',0,'".$image."','".$_POST['service']."')";
+				
+			}
 			$objQuery2 = $connect->query($strUpdate);
+			
 			if(!$objQuery2){ ?>
 				<script language="javascript">
 					alert("cannot insert your data...");
@@ -85,6 +100,12 @@
 					alert("Insert completed!!");
 				</script--><?
 				//echo $image;
+				/*echo $strUpdate;
+				echo $check ['name'];
+				echo $check ['price'];
+				echo $check ['delivery'];
+				echo $totalStock;
+				echo $objStock;*/
 				header('location:seller.php');
 			}
 		}

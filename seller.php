@@ -43,7 +43,7 @@
 		</div>
 		<div class="dropdown">
 			<div id="my_service" class="drop_service">
-				<select name="service">
+				<select name="service" required>
 					<option selected hidden value="">Please select your delivery service.</option>
 					<?
 					foreach($objQuery1 as $row){
