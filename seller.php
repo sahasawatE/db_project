@@ -12,7 +12,7 @@
 </head>
 
 <body>
-	<? 
+	<?php
 	session_start();
 	include("connection.php");
 	$user = $_SESSION['username'];
@@ -45,7 +45,7 @@
 			<div id="my_service" class="drop_service">
 				<select name="service" required>
 					<option selected hidden value="">Please select your delivery service.</option>
-					<?
+					<?php
 					foreach($objQuery1 as $row){
 						echo "<option name=".$row['service_name']." value=".$row['service_name'].">".$row['service_name']."</option>";
 						echo "\n";
@@ -70,7 +70,7 @@
         <th>remove</th>
       </tr>
 		
-			<?
+			<?php
 			$userID = $connect->query("SELECT userID FROM login WHERE username = '".$user."'")->fetch_array()['userID'];
 			$strList = "SELECT * FROM `itemtosell` WHERE `userID` = '".$userID."'";
 			$objQuery2 = $connect->query($strList);
@@ -86,7 +86,7 @@
 				<td><img src="upload/<? echo $row['picture'];?>" hight="60" width="60"/></td>
 				<td><form action="remove.php" method="post" id="remove"><button name="remove" type="submit" value="<? echo $row['name']?>" form="remove">Remove</button></form></td>
 			</tr>
-			<?	}?>
+			<?php	}?>
     </table>
   </div>
   <div class="showHistory" id="saleHistory">

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-<? include('connection.php');
+<?php 
+	include('connection.php');
 	session_start();
 	?>
 <head>
@@ -37,12 +38,12 @@
 </head>
 
 <body>
-	<?
+	<?php
 	$strDelivery = "SELECT `service_name` FROM `delivery`";
 	$objQuery = $connect->query($strDelivery);
 	$objResult = $objQuery->fetch_array();
 	?>
-  <h1> Product List </h1>
+  <h1> Product List  HAHA</h1>
 	
   <div onClick="showInfo()" class="showPopUp">
     <p id="sessionName"><? echo $_SESSION['username'];?></p><span id="popup" class="showMoreOption">
@@ -50,7 +51,6 @@
 			<tr><td><a href="profile.php">profile</a></td></tr>
 			<tr><td><a href="logout.php">logout</a></td></tr>
 		</table></span>
-    
   </div>
 	<a href="seller.php">Want to sell</a>
   <div>
@@ -65,7 +65,7 @@
 		  <th>Seller</th>
 		  <th hidden="1"></th>
       </tr>
-		<?
+		<?php
 		$getItem = $connect->query("SELECT * FROM itemtosell");
 		foreach($getItem as $row){ 
 		$sellerID = $row['userID'];
@@ -81,7 +81,7 @@
 			<td><? echo $getSellerName?></td>
 			<td style="border: none"><button onClick="addToCart()" id="buy" value="<? echo $row['name']?>">Add to cart</button></td>
 		</tr>
-		<? }?>
+		<?php }?>
     </table>
   </div>
   <div name="footer">
