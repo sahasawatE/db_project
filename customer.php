@@ -1,11 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<<<<<<< HEAD
 <?php include('connection.php');
-=======
-<?php 
-	include('connection.php');
->>>>>>> d8115565de1ebd00953bfe2116c1d5461b427359
 	session_start();
 	?>
 <head>
@@ -58,7 +53,6 @@
 	$objQuery = $connect->query($strDelivery);
 	$objResult = $objQuery->fetch_array();
 	?>
-<<<<<<< HEAD
   <h1 class="text-center"> Product List </h1>
 	
   <div onClick="showInfo()" class="showPopUp">
@@ -67,18 +61,6 @@
 		<a class="btn btn-light" href="logout.php">logout</a>
 	</div>
 	<a class="float-right btn bg-dark" style="margin: 10px; text-decoration: underline; color:lightgray;" href="seller.php">Want to sell</a>
-=======
-  <h1> Product List  HAHA</h1>
-	
-  <div onClick="showInfo()" class="showPopUp">
-    <p id="sessionName"><? echo $_SESSION['username'];?></p><span id="popup" class="showMoreOption">
-	  	<table border="0" bgcolor="#ccffff">
-			<tr><td><a href="profile.php">profile</a></td></tr>
-			<tr><td><a href="logout.php">logout</a></td></tr>
-		</table></span>
-  </div>
-	<a href="seller.php">Want to sell</a>
->>>>>>> d8115565de1ebd00953bfe2116c1d5461b427359
   <div>
     <table class="table" id="product_table" style="width: 100vw;">
       <tr>

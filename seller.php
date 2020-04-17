@@ -24,7 +24,6 @@
 </head>
 
 <body>
-<<<<<<< HEAD
   <?php
   session_start();
   include("connection.php");
@@ -109,84 +108,6 @@
       <button class="btn btn-primary" onclick="showSaleHistory()"> Sale History </button>
       <button class="btn btn-danger float-right" onclick="resetStore()"> Reset Store </button>
     </div>
-=======
-	<?php
-	session_start();
-	include("connection.php");
-	$user = $_SESSION['username'];
-	
-	$strDelivery = "SELECT `service_name` FROM `delivery`";
-	$objQuery1 = $connect->query($strDelivery);
-	//$objResult1 = $objQuery1->fetch_array();
-	?>
-  <h1> Seller </h1>
-  <div>
-    <p><? echo $_SESSION['username'];?><span id="usernameSeller"></span></p>
-    <button onclick="showAddingForm()"> Add</button>
-    <a href="customer.php">Back</a>
-  </div>
-  <div id="addingForm" style="display: none; transition: 1s">
-    <form id="formAdding" action="updatestock.php" method="post" enctype="multipart/form-data" autocomplete="off">
-      <div>
-		  <a>Name : </a><input type="text" id="add_name" name="name" required/>
-      </div>
-      <div>
-        <a>stock : </a><input type="number" id="add_stock" value="0" name="stock" required/>
-      </div>
-      <div>
-        <a>price : </a><input type="number" id="add_price" value="0" name="price" required/>
-      </div>
-		<div>
-			<a>picture : </a><input type="file" id="add_picture" name="picture" required/>
-		</div>
-		<div class="dropdown">
-			<div id="my_service" class="drop_service">
-				<select name="service" required>
-					<option selected hidden value="">Please select your delivery service.</option>
-					<?php
-					foreach($objQuery1 as $row){
-						echo "<option name=".$row['service_name']." value=".$row['service_name'].">".$row['service_name']."</option>";
-						echo "\n";
-					}
-					?>
-				</select>
-			</div>
-		</div>
-      <!--button onclick="addClick()" id="upload" name="add"> Add </button-->
-		<input type="submit" value="Add" onClick="addClick()" id="upload" name="add"/>
-	  </form>
-      <button onclick="closeAddingForm()"> Cancle </button>
-  </div>
-  <div>
-    <table id="product_table" style="width: 100vw;">
-      <tr>
-        <th>Product Name</th>
-        <th>stock</th>
-        <th>price</th>
-        <th>sold</th>
-        <th>product picture</th>
-        <th>remove</th>
-      </tr>
-		
-			<?php
-			$userID = $connect->query("SELECT userID FROM login WHERE username = '".$user."'")->fetch_array()['userID'];
-			$strList = "SELECT * FROM `itemtosell` WHERE `userID` = '".$userID."'";
-			$objQuery2 = $connect->query($strList);
-			/*$objResult2 = $objQuery2->fetch_array();
-			$name = $objQuery2['name'];*/
-			
-			foreach($objQuery2 as $row){ ?>
-			<tr>
-				<td><? echo $row['name'];?></td>
-				<td><? echo $row['stock'];?></td>
-				<td><? echo $row['price'];?></td>
-				<td><? echo $row['sold'];?></td>
-				<td><img src="upload/<? echo $row['picture'];?>" hight="60" width="60"/></td>
-				<td><form action="remove.php" method="post" id="remove"><button name="remove" type="submit" value="<? echo $row['name']?>" form="remove">Remove</button></form></td>
-			</tr>
-			<?php	}?>
-    </table>
->>>>>>> d8115565de1ebd00953bfe2116c1d5461b427359
   </div>
 
   <div class="showHistory" id="saleHistory">
