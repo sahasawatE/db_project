@@ -39,27 +39,6 @@
 		$uploadOK = 0;
 		echo "fuck3";
 	}
-	/*$target_dir = "DB_Project-master/upload/";
-	$pic_name = basename($_FILES['picture']['name']);
-	$picture = $target_dir.$pic_name;
-	$imageFileType = pathinfo($picture,PATHINFO_EXTENSION);
-	
-	if(isset($_POST['submit']) && !empty($_FILES['picture']["name"])){
-		$check = getimagesize($_FILES['picture']["name"]);
-		if($check != false){
-			echo "File is an image - ".$check["mine"].".";
-			$uploadOK = 1;
-		}
-		else{
-			echo "File is not an image...";
-			$uploadOK = 0;
-		}
-	}
-	if(file_exists($picture)){
-		echo "File is already exists.";
-		$uploadOK = 0;
-	}
-	*/
 	if($uploadOK == 1){
 		$strUser = "SELECT * FROM `login` WHERE `username` = '".$username."'";
 		$objQuery1 = $connect->query($strUser);
@@ -91,14 +70,14 @@
 				<script language="javascript">
 					alert("cannot insert your data...");
 				</script>
-			<?
+			<?php
 				//header('location:seller.php');
 				echo $strUpdate;
 			}
 			else{ ?>
 				<!--script language="javascript">
 					alert("Insert completed!!");
-				</script--><?
+				</script--><?php
 				//echo $image;
 				/*echo $strUpdate;
 				echo $check ['name'];

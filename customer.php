@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<? include('connection.php');
+<?php include('connection.php');
 	session_start();
 	?>
 <head>
@@ -8,6 +8,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" type="text/css" href="style.css">
   <title>Customer</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+    crossorigin="anonymous"></script>
 	<style>
 		.showPopUp{
 			position: relative;
@@ -37,24 +48,21 @@
 </head>
 
 <body>
-	<?
+	<?php
 	$strDelivery = "SELECT `service_name` FROM `delivery`";
 	$objQuery = $connect->query($strDelivery);
 	$objResult = $objQuery->fetch_array();
 	?>
-  <h1> Product List </h1>
+  <h1 class="text-center"> Product List </h1>
 	
   <div onClick="showInfo()" class="showPopUp">
-    <p id="sessionName"><? echo $_SESSION['username'];?></p><span id="popup" class="showMoreOption">
-	  	<table border="0" bgcolor="#ccffff">
-			<tr><td><a href="profile.php">profile</a></td></tr>
-			<tr><td><a href="logout.php">logout</a></td></tr>
-		</table></span>
-    
-  </div>
-	<a href="seller.php">Want to sell</a>
+		<p class="btn btn-danger font-weight-bold	" style="margin: 5px" id="sessionName"><?php echo $_SESSION['username'];?></p>
+		<a class="btn btn-light" href="profile.php">profile</a>
+		<a class="btn btn-light" href="logout.php">logout</a>
+	</div>
+	<a class="float-right btn bg-dark" style="margin: 10px; text-decoration: underline; color:lightgray;" href="seller.php">Want to sell</a>
   <div>
-    <table id="product_table" style="width: 100vw;">
+    <table class="table" id="product_table" style="width: 100vw;">
       <tr>
         <th> Name</th>
         <th> Stock</th>
@@ -62,31 +70,31 @@
         <th> Price</th>
         <th> Product Pic</th>
         <th> Delivery</th>
-		  <th>Seller</th>
-		  <th hidden="1"></th>
+		  	<th> Seller</th>
+		  	<th> Select</th>
       </tr>
-		<?
+		<?php
 		$getItem = $connect->query("SELECT * FROM itemtosell");
 		foreach($getItem as $row){ 
 		$sellerID = $row['userID'];
 		$getSellerName = $connect->query("SELECT * FROM login WHERE userID = '".$sellerID."'")->fetch_array()['username'];
 		?>
 		<tr>
-			<td><? echo $row['name'];?></td>
-			<td><? echo $row['stock'];?></td>
-			<td><? echo $row['sold'];?></td>
-			<td><? echo $row['price'];?></td>
-			<td><img src="upload/<? echo $row['picture'];?>" height="60" width="60"/></td>
-			<td><? echo $row['delivery'];?></td>
-			<td><? echo $getSellerName?></td>
-			<td style="border: none"><button onClick="addToCart()" id="buy" value="<? echo $row['name']?>">Add to cart</button></td>
+			<td><?php echo $row['name'];?></td>
+			<td><?php echo $row['stock'];?></td>
+			<td><?php echo $row['sold'];?></td>
+			<td><?php echo $row['price'];?></td>
+			<td><img src="upload/<?php echo $row['picture'];?>" height="60" width="60"/></td>
+			<td><?php echo $row['delivery'];?></td>
+			<td><?php echo $getSellerName?></td>
+			<td style="border: none"><button class="btn btn-primary" onClick="addToCart()" id="buy" value="<?php echo $row['name']?>">Add to cart</button></td>
 		</tr>
-		<? }?>
+		<?php }?>
     </table>
   </div>
   <div name="footer">
-    <h3>Totle <span id="totalValue" class="totalValue">0</span></h3>
-    <button onclick="buy()">BUY</button>
+    <h3 class="d-flex justify-content-center">Totel <span id="totalValue" class="totalValue">0</span></h3>
+    <button style="margin:10px" class="btn btn-success" onclick="buy()">BUY</button>
   </div>
   <script type="text/javascript" src="dummy.js"></script>
   <script type="text/javascript" src="storeConfig.js"></script>

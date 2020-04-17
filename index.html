@@ -4,26 +4,65 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+    crossorigin="anonymous"></script>
+
   <title>Login Page</title>
+  <style>
+    .container {
+      position: absolute;
+      width: 70%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #EAEAEA;
+      padding: 25px;
+      border: 1px solid #9C9C9C;
+      border-radius: 15px;
+    }
+
+    .container form {
+      width: 75%;
+      text-align: center;
+    }
+
+    .container form input:nth-child(2) {
+      width: 75%;
+    }
+  </style>
 </head>
 
 <body>
-  <form action="checkLogin.php" method="post" name="from1" autocomplete="off">
-	<div align="center">
-    <div name="username">
-      <p>Username</p>
-      <input type="text" name="username"/>
+  <div class="container">
+    <div class="row justify-content-center align-items-center">
+      <form class="form" action="checkLogin.php" method="post" name="from1" autocomplete="off">
+        <h3 class="text-info">Login</h3>
+        <div name="username" class="form-group">
+          <p class="text-info">username</p>
+          <input type="text" name="username" />
+        </div>
+        <div name="password" class="form-group">
+          <p class="text-info">password</p>
+          <input type="password" name="password" />
+        </div>
+        <div name="submit">
+          <input type="submit" class="btn btn-info btn-md" />
+          <a href="signin.php" class="btn btn-secondary">sign up here.</a>
+        </div>
+      </form>
+
     </div>
-    <div name="password">
-      <p>password</p>
-      <input type="password" name="password"/>
-    </div>
-    <div name="submit">
-      <input type="submit" />
-    </div>
-		<a href="signin.php">sign up here.</a>
-	</div>
-  </form>
+  </div>
 </body>
 
 </html>

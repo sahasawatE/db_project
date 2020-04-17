@@ -1,14 +1,5 @@
-table {
-  border-collapse: collapse;
-}
-
 body{
   transition: 0.5s;
-}
-
-table, th, td {
-  border: 1px solid black;
-  text-align: center;
 }
 
 .showHistory {
