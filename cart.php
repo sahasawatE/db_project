@@ -44,7 +44,14 @@
 			
 			$activity = $connect->query("INSERT INTO `activitylog`(`userID`, `username`, `sellerID`, `sellerName`, `productID`, `product_name`, `total_price`) VALUES ('".$userID."','".$_SESSION['username']."','".$sellerID."','".$sellerName."','".$row['productID']."','".$row['product_name']."','".$row['price']."')");
 			$confirm = $connect->query("DELETE FROM cart WHERE userID = '".$row['userID']."' AND productID = '".$row['productID']."'");
-			header("location:cart.php");
+			if($inStock == 0){
+				$emptyStock = $connect->query("DELETE FROM itemtosell WHERE productID = '".$row['productID']."'");
+				header("location:cart.php");
+			}
+			else{
+				header("location:cart.php");
+			}
+			
 		}
 	}
 	

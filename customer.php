@@ -44,6 +44,15 @@
 			visibility: visible;
 			
 		}
+    .background-sale-history {
+      position: absolute;
+      width: 100vw;
+      height: 100vh;
+      top: 0px;
+      left: 0px;
+      background-color: black;
+      opacity: 0.5;
+    }
 	</style>
 </head>
 
@@ -53,12 +62,15 @@
 	$objQuery = $connect->query($strDelivery);
 	$objResult = $objQuery->fetch_array();
 	?>
+<div id="not-history">	
   <h1 class="text-center"> Product List </h1>
 	
   <div onClick="showInfo()" class="showPopUp">
 		<p class="btn btn-danger font-weight-bold	" style="margin: 5px" id="sessionName"><?php echo $_SESSION['username'];?></p>
-		<a class="btn btn-light" href="logout.php">logout</a>
 	</div>
+	<button class="btn btn-primary" onclick="showSaleHistory()">Buy History </button>
+
+	<a class="btn btn-light" href="logout.php">logout</a>
 	<a class="float-right btn bg-dark" style="margin: 10px; text-decoration: underline; color:lightgray;" href="seller.php">Want to sell</a>
   <div>
 	<form action="buy.php" method="post">
@@ -106,6 +118,46 @@
 		?>
 		</span></h3>
     <div align="center"><a href="cart.php"><button style="margin:10px" class="btn btn-success" onClick="">VIEW CART</button></a></div>
+  </div>
+</div>
+	
+  <div class="showHistory" id="saleHistory">
+    <div>
+      <p class="background-sale-history" style="height:100vh"> </p>
+    </div>
+    <table class="table" id="history_table" style="width: 75vw;">
+      <tr>
+        <th>Seller Id</th>
+		<th>Seller name</th>
+        <th>Product Id</th>
+        <th>Product name</th>
+        <th>total price</th>
+      </tr>
+		  <?
+		$userID = $connect->query("SELECT * FROM login WHERE username = '" . $_SESSION['username'] . "'")->fetch_array()['userID'];
+		  $getActivity = $connect->query("SELECT * FROM activitylog WHERE userID = '".$userID."' AND username = '".$_SESSION['username']."'");
+		$total_price = 0;
+		  foreach($getActivity as $row){ 
+			$total_price = $total_price+$row['total_price'];
+			?>
+			  <tr>
+		 		  <td><? echo $row['sellerID']?></td>
+				  <td><? echo $row['sellerName']?></td>
+				  <td><? echo $row['productID']?></td>
+				  <td><? echo $row['product_name']?></td>
+				  <td><? echo $row['total_price']?></td>
+		      </tr>
+		<?  }
+		  ?>
+		<tr>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td>Total</td>
+			<td><? echo $total_price?></td>
+		</tr>
+    </table>
+    <button onclick="closeSaleHistory()">close</button>
   </div>
   <script type="text/javascript" src="dummy.js"></script>
   <script type="text/javascript" src="storeConfig.js"></script>
@@ -162,6 +214,17 @@
       totalValue += value
       console.log(dummy_store[id])
       document.getElementById(`totalValue`).innerHTML = totalValue
+    }
+    function showSaleHistory() {
+      document.getElementById("saleHistory").style.display = "block"
+      document.querySelector("body").style.backgroundColor = "#aaaaaa"
+      document.getElementById("not-history").style.filter = "blur(10px)"
+    }
+
+    function closeSaleHistory() {
+      document.getElementById("saleHistory").style.display = "none"
+      document.querySelector("body").style.backgroundColor = "#ffffff"
+      document.getElementById("not-history").style.filter = "blur(0px)"
     }
 /*
    function buy() {
