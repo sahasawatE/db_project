@@ -57,11 +57,11 @@
 	
   <div onClick="showInfo()" class="showPopUp">
 		<p class="btn btn-danger font-weight-bold	" style="margin: 5px" id="sessionName"><?php echo $_SESSION['username'];?></p>
-		<a class="btn btn-light" href="profile.php">profile</a>
 		<a class="btn btn-light" href="logout.php">logout</a>
 	</div>
 	<a class="float-right btn bg-dark" style="margin: 10px; text-decoration: underline; color:lightgray;" href="seller.php">Want to sell</a>
   <div>
+	<form action="buy.php" method="post">
     <table class="table" id="product_table" style="width: 100vw;">
       <tr>
         <th> Name</th>
@@ -77,7 +77,8 @@
 		$getItem = $connect->query("SELECT * FROM itemtosell");
 		foreach($getItem as $row){ 
 		$sellerID = $row['userID'];
-		$getSellerName = $connect->query("SELECT * FROM login WHERE userID = '".$sellerID."'")->fetch_array()['username'];
+		$getSellerName = $connect->query("SELECT * FROM login WHERE userID = '".$sellerID."'")->fetch_array();
+		$sellerName = $getSellerName['username'];
 		?>
 		<tr>
 			<td><?php echo $row['name'];?></td>
@@ -86,15 +87,25 @@
 			<td><?php echo $row['price'];?></td>
 			<td><img src="upload/<?php echo $row['picture'];?>" height="60" width="60"/></td>
 			<td><?php echo $row['delivery'];?></td>
-			<td><?php echo $getSellerName?></td>
-			<td style="border: none"><button class="btn btn-primary" onClick="addToCart()" id="buy" value="<?php echo $row['name']?>">Add to cart</button></td>
+			<td><?php echo $sellerName?></td>
+			<td style="border: none"><button class="btn btn-primary" id="buy" value="<?php echo $row['productID']?>" type="submit" name="buy[]">Add to cart</button></td>
 		</tr>
-		<?php }?>
+		<?php } //create array to push data to buy.php for chhecking stock and update?>
     </table>
+		<input type="hidden" name="ispostback" value="true"/>
+	  </form>
   </div>
   <div name="footer">
-    <h3 class="d-flex justify-content-center">Totel <span id="totalValue" class="totalValue">0</span></h3>
-    <button style="margin:10px" class="btn btn-success" onclick="buy()">BUY</button>
+    <h3 class="d-flex justify-content-center">Total <span id="totalValue" class="totalValue">
+		<? $inCart = $connect->query("SELECT * FROM cart WHERE username = '".$_SESSION['username']."'");
+		$total_amount = 0;
+		foreach($inCart as $row){
+			$total_amount = $total_amount+$row['amount'];
+		}
+		echo '&nbsp;'.": ".$total_amount;
+		?>
+		</span></h3>
+    <div align="center"><a href="cart.php"><button style="margin:10px" class="btn btn-success" onClick="">VIEW CART</button></a></div>
   </div>
   <script type="text/javascript" src="dummy.js"></script>
   <script type="text/javascript" src="storeConfig.js"></script>
@@ -152,7 +163,7 @@
       console.log(dummy_store[id])
       document.getElementById(`totalValue`).innerHTML = totalValue
     }
-
+/*
    function buy() {
 	  if(totalBuy == 0){
 		  alert("Your cart is empty.")
@@ -163,23 +174,10 @@
 			cart = 0;
 			document.getElementById("totalValue").innerHTML = totalBuy;
 		}
-    }
+    }*/
 	function showInfo(){
 		 var popup = document.getElementById("popup");
 		 popup.classList.toggle("show");
-	}
-	function addToCart(id){
-		  var adding = confirm("Add to your cart ?");
-		if(adding == 1){
-			totalBuy++;
-			document.getElementById("totalValue").innerHTML = totalBuy;
-			cart = 1;
-			var itemName = $('#buy').val();
-			alert("added !!");
-		}
-		else{
-			alert("fuck off!! you poor fuck!");
-		}
 	}
   </script>
 </body>

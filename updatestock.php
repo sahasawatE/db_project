@@ -20,7 +20,7 @@
 	$file_type = pathinfo($target_path,PATHINFO_EXTENSION);
 	
 	if(isset($_POST['add']) && !empty($_FILES['picture']['name'])){
-		$allow_type = array('JPG','PNG','JPEG','gif','jpg');
+		$allow_type = array('JPG','PNG','JPEG','gif','jpg','png');
 		if(in_array($file_type,$allow_type)){
 			if(move_uploaded_file($_FILES['picture']['tmp_name'],$target_path)){
 				$uploadOK = 1;
@@ -54,6 +54,10 @@
 			$objResult2 = $checkStock->fetch_array();
 			$objStock = $objResult2['stock'];
 			$totalStock = $objStock+$_POST['stock'];
+			$itemid_generator = uniqid("item");
+			
+			//don't forget to generate the productID for deleting item that have the same name
+			//don't for get to insert data to activitylog with sellMode 
 			
 			if($objResult2){
 				//UPDATE
@@ -61,7 +65,7 @@
 			}
 			else{
 				//INSERT
-				$strUpdate = "INSERT INTO `itemtosell`(`userID`, `productID`, `name`, `stock`, `price`, `sold`, `picture`, `delivery`) VALUES ('".$userID."',0,'".$_POST['name']."','".$_POST['stock']."','".$_POST['price']."',0,'".$image."','".$_POST['service']."')";
+				$strUpdate = "INSERT INTO `itemtosell`(`userID`, `productID`, `name`, `stock`, `price`, `sold`, `picture`, `delivery`) VALUES ('".$userID."','".$itemid_generator."','".$_POST['name']."','".$_POST['stock']."','".$_POST['price']."',0,'".$image."','".$_POST['service']."')";
 				
 			}
 			$objQuery2 = $connect->query($strUpdate);

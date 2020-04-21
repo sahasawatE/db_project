@@ -104,7 +104,7 @@
       </table>
     </div>
     <div class="footer">
-      <h4 class="d-flex justify-content-center">Total Sale <span></span></h4>
+      <!--h4 class="d-flex justify-content-center">Total Sale <span></span></h4-->
       <button class="btn btn-primary" onclick="showSaleHistory()"> Sale History </button>
       <button class="btn btn-danger float-right" onclick="resetStore()"> Reset Store </button>
     </div>
@@ -117,11 +117,33 @@
     <table class="table" id="history_table" style="width: 75vw;">
       <tr>
         <th>Cutomer Id</th>
-        <th>Product Name</th>
-        <th>buy</th>
+		<th>Customer name</th>
+        <th>Product Id</th>
+        <th>Product name</th>
         <th>total price</th>
-        <th>delivery</th>
       </tr>
+		  <?
+		  $getActivity = $connect->query("SELECT * FROM activitylog WHERE sellerID = '".$userID."' AND sellerName = '".$user."'");
+		$total_price = 0;
+		  foreach($getActivity as $row){ 
+			$total_price = $total_price+$row['total_price'];
+			?>
+			  <tr>
+		 		  <td><? echo $row['userID']?></td>
+				  <td><? echo $row['username']?></td>
+				  <td><? echo $row['productID']?></td>
+				  <td><? echo $row['product_name']?></td>
+				  <td><? echo $row['total_price']?></td>
+		      </tr>
+		<?  }
+		  ?>
+		<tr>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td>Total</td>
+			<td><? echo $total_price?></td>
+		</tr>
     </table>
     <button onclick="closeSaleHistory()">close</button>
   </div>
@@ -162,10 +184,7 @@
     function resetStore() {
       var check = confirm("Are you sure to reset your store?");
       if (check == true) {
-        alert("reset completed !");
-      }
-      if (check == false) {
-        alert("Coward");
+        location.replace("restore.php");
       }
     }
   </script>
